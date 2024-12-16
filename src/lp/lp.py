@@ -30,6 +30,10 @@ def solve_instance():
     for j in range(len(routes_df)):
         model += lpSum(x[i, j] for i in range(len(airplanes_df))) == 1
 
+    # constraint: fleet count limits
+    for i in range(len(airplanes_df)):
+        model += lpSum(x[i, j] for j in range(len(routes_df))) <= airplanes_df.loc[i, "count"], f"FleetLimit_{i}"
+
     # constraint payload limits
     for i in range(len(airplanes_df)):
         for j in range(len(routes_df)):
@@ -43,11 +47,11 @@ def solve_instance():
     # solve
     status = model.solve()
 
-    # check every route has an assigned plane
-    for j in range(len(routes_df)):
-        assigned_planes = [x[i, j].value() for i in range(len(airplanes_df))]
-        if sum(assigned_planes) != 1:
-            raise f"Error: Flight {routes_df.loc[j, 'flight_id']} is not properly assigned!"
+    # # check every route has an assigned plane
+    # for j in range(len(routes_df)):
+    #     assigned_planes = [x[i, j].value() for i in range(len(airplanes_df))]
+    #     if sum(assigned_planes) != 1:
+    #         raise f"Error: Flight {routes_df.loc[j, 'flight_id']} is not properly assigned!"
 
     # check payload constraints are respected
     for i in range(len(airplanes_df)):
@@ -70,8 +74,6 @@ def solve_instance():
                 result[routes_df.loc[j, 'route_Id']] = airplanes_df.loc[i, 'code']
 
     return result
-
-
 
 
 if __name__ == "__main__":

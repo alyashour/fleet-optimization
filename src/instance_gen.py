@@ -7,8 +7,9 @@ import itertools
 import random
 import pandas as pd
 
-from airplane import Airplane
+from aircraft import Aircraft
 from airport import Airport
+from fleet import Fleet
 from route import Route
 
 # random gen seed
@@ -16,7 +17,8 @@ SEED = 42456789
 
 # size of each subset that will be randomly selected
 NUM_AIRPORTS = 5
-NUM_AIRCRAFT = 8  # for all aircraft, put 8
+NUM_AIRCRAFT_TYPES = 8  # for all aircraft types, put 8
+NUM_AIRCRAFT = 10  # how many aircraft does this random fleet contain? MUST BE MORE THAN NUM_ROUTES
 NUM_ROUTES = 10
 
 # config
@@ -26,6 +28,7 @@ MIN_CARGO_LOAD = 1000
 MAX_CARGO_LOAD = 10_000
 
 def gen(debug=False, save_instance=True):
+    assert NUM_AIRCRAFT >= NUM_ROUTES, "NOT ENOUGH PLANES FOR THE ROUTES"
     random.seed(SEED)
 
     # airport data
@@ -45,17 +48,23 @@ def gen(debug=False, save_instance=True):
 
     # airplane data
     airplanes_df = pd.read_csv("../data/base/aircraft_data.csv")
-    fleet_df = airplanes_df.sample(n=NUM_AIRCRAFT, random_state=SEED)
-    airplanes = [Airplane(
-        model=row["Aircraft Model"],
-        code=row["Code"],
-        max_range=row["Max Range (km)"],
-        fuel_efficiency=row["Fuel Efficiency (L/km)"],
-        max_payload=row["Max Payload (kg)"]
-    ) for index, row in fleet_df.iterrows()]
+    aircraft_df = airplanes_df.sample(n=NUM_AIRCRAFT_TYPES, random_state=SEED)
+    fleet = Fleet()
+    for index, row in aircraft_df.iterrows():
+        aircraft = Aircraft(
+            model=row["Aircraft Model"],
+            code=row["Code"],
+            max_range=row["Max Range (km)"],
+            fuel_efficiency=row["Fuel Efficiency (L/km)"],
+            max_payload=row["Max Payload (kg)"]
+        )
+        fleet.add_aircraft(aircraft)
+
+    # add more aircraft to the fleet
+    fleet.grow_to_size(NUM_AIRCRAFT)
 
     if debug:
-        print(airplanes)
+        print(fleet)
 
     # route data
     possible_routes = list(itertools.combinations(airports, 2))
@@ -78,7 +87,7 @@ def gen(debug=False, save_instance=True):
     # save the instance if needed
     if save_instance:
         airports_df = pd.DataFrame([a.__dict__ for a in airports])
-        airplanes_df = pd.DataFrame([a.__dict__ for a in airplanes])
+        airplanes_df = pd.DataFrame([a.__dict__ for a in fleet])
         routes_df = pd.DataFrame([r.__dict__ for r in routes])
         airports_df.to_csv("instance/airports.csv", header=True, index=False)
         airplanes_df.to_csv("instance/airplanes.csv", header=True, index=False)
