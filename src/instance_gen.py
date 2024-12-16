@@ -7,9 +7,9 @@ import itertools
 import random
 import pandas as pd
 
-from Airplane import Airplane
-from Airport import Airport
-from Route import Route
+from airplane import Airplane
+from airport import Airport
+from route import Route
 
 # random gen seed
 SEED = 42456789
@@ -45,14 +45,14 @@ def gen(debug=False, save_instance=True):
 
     # airplane data
     airplanes_df = pd.read_csv("../data/base/aircraft_data.csv")
-    sampled_airplanes_df = airplanes_df.sample(n=NUM_AIRCRAFT, random_state=SEED)
+    fleet_df = airplanes_df.sample(n=NUM_AIRCRAFT, random_state=SEED)
     airplanes = [Airplane(
         model=row["Aircraft Model"],
         code=row["Code"],
         max_range=row["Max Range (km)"],
         fuel_efficiency=row["Fuel Efficiency (L/km)"],
         max_payload=row["Max Payload (kg)"]
-    ) for index, row in sampled_airplanes_df.iterrows()]
+    ) for index, row in fleet_df.iterrows()]
 
     if debug:
         print(airplanes)

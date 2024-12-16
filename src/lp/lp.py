@@ -62,11 +62,18 @@ def solve_instance():
     print("Status: ", status)
     print("Objective value (Total Cost): ", model.objective.value())
 
+    result = {}
     for i in range(len(airplanes_df)):
         for j in range(len(routes_df)):
             if x[i, j].value() == 1:
                 print(f"Airplane {airplanes_df.loc[i, 'code']} assigned to flight {routes_df.loc[j, 'route_Id']}")
+                result[routes_df.loc[j, 'route_Id']] = airplanes_df.loc[i, 'code']
+
+    return result
+
+
 
 
 if __name__ == "__main__":
-    solve_instance()
+    result = solve_instance()
+    print(result)

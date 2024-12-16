@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from Airport import Airport
+from airport import Airport
 
 @dataclass
 class Route:
