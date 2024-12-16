@@ -1,0 +1,9 @@
+Aircraft Model,Code,Max Range (km),Fuel burn (kg/km),Fuel Density (kg/L),Fuel Efficiency (L/km),Max Payload (kg)
+Airbus A320,A320,6100,2.91,0.8,2.328,19900
+Boeing 737-800,B737,5445,3.17,0.8,2.536,20540
+Boeing 777-300ER,B777,13649,8.49,0.8,6.792,100698
+Airbus A321,A321,5900,3.47,0.8,2.776,25300
+Boeing 787-9,B787,14010,5.77,0.8,4.616,52587
+Airbus A350-900,A350,13900,6.52,0.8,5.216,53300
+Airbus A330-300,A330,11750,6.25,0.8,5,45900
+Airbus A320neo,A320neo,6300,2.79,0.8,2.232,20000
