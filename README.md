@@ -33,6 +33,7 @@ Routes are strictly unique and route A → B $\ne$ B → A.
 ## What's next?
 - [ ] route visualizer
 - [ ] nonlinear fuel function
+- [ ] rotation problem
 
 Aly Ashour
 
