@@ -1,5 +1,5 @@
 # Flight Scheduling System
-Linear programming model to schedule flights and distribute aircraft to minimize cost.
+Mixed-integer linear programming model to schedule flights and distribute aircraft to minimize cost.
 
 ## Usage
 Run `instance_gen.py` to generate an instance.  
