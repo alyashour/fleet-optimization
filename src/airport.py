@@ -21,7 +21,7 @@ class Airport:
         return _find_distance(self.lat, self.lon, other.lat, other.lon)
 
     def __str__(self):
-        return f"{self.name} ({self.code})"
+        return self.code
 
     def __repr__(self):
         return f"Airport({self.name}, {self.code}, {self.lat}, {self.lon}, {self.city}, {self.country})"
