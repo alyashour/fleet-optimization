@@ -32,8 +32,10 @@ Routes are strictly unique and route A → B $\ne$ B → A.
 
 ## What's next?
 - [ ] route visualizer
+- [ ] move to pax fuel efficiency
 - [ ] nonlinear fuel function
 - [ ] rotation problem
+- [ ] aircraft maintenance
 
 Aly Ashour
 

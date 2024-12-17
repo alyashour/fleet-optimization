@@ -66,6 +66,7 @@ def solve_instance(airplanes: list[Aircraft], routes: list[Route]) -> dict:
             total_load = routes[j].passenger_load * WEIGHT_PER_PASSENGER + routes[j].cargo_load
             model += (total_load * x[i, j] <= airplanes[i].max_payload), f"PayloadLimit_{i}_{j}"
 
+    # constraint range limits
     for i in range(len(airplanes)):
         for j in range(len(routes)):
             model += x[i, j] * routes[j].distance <= airplanes[i].max_range, f"RangeLimit_{i}_{j}"
